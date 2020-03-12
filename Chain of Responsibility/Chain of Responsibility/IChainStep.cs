@@ -4,7 +4,7 @@ namespace Chain_of_Responsibility
 {
     public interface IChainStep
     {
-        void CheckStep();
+        bool CheckStep();
         bool CheckInput(string Input);       
     }
 
@@ -12,7 +12,7 @@ namespace Chain_of_Responsibility
     {
         public abstract string PassString { get; set; }
 
-        public void CheckStep()
+        public bool CheckStep()
         {
             Console.WriteLine("");
             Console.WriteLine($"***** {GetType().Name} Step *****");
@@ -20,20 +20,12 @@ namespace Chain_of_Responsibility
         
             string inputString = Console.ReadLine();
 
-            if (!CheckInput(inputString))
-                StepFailed();
+            return CheckInput(inputString);
         }
 
         public bool CheckInput(string input)
         {
             return input == PassString;
-        }
-
-        private void StepFailed()
-        {
-            Console.WriteLine("");
-            Console.WriteLine($"Error: {GetType().Name} failed.");
-            Helper.EndProgramOutput();
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Chain_of_Responsibility
             Console.WriteLine("");
             Console.Write("Press any key to end...");
             Console.ReadKey();
-            return;
         }
     }
 }

@@ -9,11 +9,25 @@ namespace Chain_of_Responsibility
             IntroOutput();
 
             ChainStep Authentication = new Authentication();
-            Authentication.CheckStep();
+            if (!Authentication.CheckStep())
+            {
+                StepFailed(Authentication);
+                return;
+            }
+
             ChainStep Authorisation = new Authorisation();
-            Authorisation.CheckStep();
+            if (!Authorisation.CheckStep())
+            { 
+                StepFailed(Authorisation);
+                return;
+            }
+
             ChainStep Validation = new Validation();
-            Validation.CheckStep();
+            if (!Validation.CheckStep())
+            {
+                StepFailed(Validation);
+                return;
+            }
 
             ProgramPassed();
         }
@@ -21,6 +35,13 @@ namespace Chain_of_Responsibility
         private static void IntroOutput()
         {
             Console.WriteLine("***** Chain of Responsibility *****");
+        }
+
+        private static void StepFailed(IChainStep ChainStep)
+        {
+            Console.WriteLine("");
+            Console.WriteLine($"Error: {ChainStep.GetType().Name} failed.");
+            Helper.EndProgramOutput();
         }
 
         private static void ProgramPassed()
