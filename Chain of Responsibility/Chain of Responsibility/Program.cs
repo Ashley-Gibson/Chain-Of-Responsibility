@@ -4,22 +4,86 @@ namespace Chain_of_Responsibility
 {
     class Program
     {
+        static bool authenticated = false;
+        static bool authorised = false;
+        static bool validated = false;
+
         static void Main(string[] args)
         {
+            IntroOutput();           
+            
+            authenticated = AuthenticationStep();
+
+            if (authenticated)
+                authorised = AuthorisationStep();
+            else
+                StepFailed("User not Authenticated");
+
+            if(authorised)
+                validated = ValidationStep();
+            else
+                StepFailed("User not Authorised");
+
+            if (validated)
+                ProgramPassed();
+            else
+                StepFailed("User not Validated");
+
+            EndProgramOutput();
+        }
+
+        private static void IntroOutput()
+        {
             Console.WriteLine("***** Chain of Responsibility *****");
-            Console.WriteLine("\n");
+        }
+
+        private static bool AuthenticationStep()
+        {
+            Console.WriteLine("");
             Console.WriteLine("***** Link 1 - Authentication *****");
-            Console.WriteLine("\n");
-            Console.ReadLine();
-            Console.WriteLine("\n");
-            Console.WriteLine("***** Link 2 - Authorization *****");
-            Console.WriteLine("\n");
-            Console.ReadLine();
-            Console.WriteLine("\n");
+            Console.WriteLine("");
+
+            string authenticationString = Console.ReadLine();
+            return Authentication.AuthenticateInput(authenticationString);
+        }
+
+        private static bool AuthorisationStep()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("***** Link 2 - Authorisation *****");
+            Console.WriteLine("");
+
+            string authorisationString = Console.ReadLine();
+            return Authorisation.AuthoriseInput(authorisationString);
+        }
+
+        private static bool ValidationStep()
+        {
+            Console.WriteLine("");
             Console.WriteLine("***** Link 3 - Validation *****");
-            Console.WriteLine("\n");
-            Console.WriteLine("Press any key to end...");
+            Console.WriteLine("");
+
+            string validationString = Console.ReadLine();
+            return Validation.ValidateInput(validationString);
+        }
+
+        private static void EndProgramOutput()
+        {
+            Console.WriteLine("");
+            Console.Write("Press any key to end...");
             Console.ReadKey();
+        }
+
+        private static void StepFailed(string ErrorMessage)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Error: " + ErrorMessage);
+        }
+
+        private static void ProgramPassed()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Well done you have completed the program.");
         }
     }
 }
