@@ -1,12 +1,17 @@
 ﻿namespace Chain_of_Responsibility
 {
-    public static class Validation
+    public class Validation : ChainStep
     {
-        private readonly static string ValidationPassString = "true";
-
-        public static bool ValidateInput(string validationString)
+        private string _passString;
+        public override string PassString
         {
-            return validationString == ValidationPassString ? true : false;
+            set { _passString = value; }
+            get { return _passString; }
+        }
+
+        public Validation()
+        {
+            PassString = "true";
         }
     }
 }
