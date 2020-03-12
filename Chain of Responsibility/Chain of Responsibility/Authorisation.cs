@@ -2,9 +2,11 @@
 {
     public static class Authorisation
     {
-        public static bool AuthoriseInput(string authoriseString)
+        private readonly static string AuthorisationPassString = "true";
+
+        public static bool AuthoriseInput(string authorisationString)
         {
-            return true;
+            return authorisationString == AuthorisationPassString ? true : false;
         }
     }
 }

@@ -17,19 +17,26 @@ namespace Chain_of_Responsibility
             if (authenticated)
                 authorised = AuthorisationStep();
             else
+            {
                 StepFailed("User not Authenticated");
+                return;
+            }
 
             if(authorised)
                 validated = ValidationStep();
             else
+            { 
                 StepFailed("User not Authorised");
+                return;
+            }
 
             if (validated)
                 ProgramPassed();
             else
+            { 
                 StepFailed("User not Validated");
-
-            EndProgramOutput();
+                return;
+            }
         }
 
         private static void IntroOutput()
@@ -78,12 +85,14 @@ namespace Chain_of_Responsibility
         {
             Console.WriteLine("");
             Console.WriteLine("Error: " + ErrorMessage);
+            EndProgramOutput();
         }
 
         private static void ProgramPassed()
         {
             Console.WriteLine("");
             Console.WriteLine("Well done you have completed the program.");
+            EndProgramOutput();
         }
     }
 }

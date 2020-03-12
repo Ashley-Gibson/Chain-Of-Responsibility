@@ -2,9 +2,11 @@
 {
     public static class Validation
     {
+        private readonly static string ValidationPassString = "true";
+
         public static bool ValidateInput(string validationString)
         {
-            return true;
+            return validationString == ValidationPassString ? true : false;
         }
     }
 }
