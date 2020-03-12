@@ -1,12 +1,17 @@
 ﻿namespace Chain_of_Responsibility
 {
-    public static class Authorisation
+    public class Authorisation : ChainStep
     {
-        private readonly static string AuthorisationPassString = "true";
-
-        public static bool AuthoriseInput(string authorisationString)
+        private string _passString;
+        public override string PassString
         {
-            return authorisationString == AuthorisationPassString ? true : false;
+            set { _passString = value; }
+            get { return _passString; }
+        }
+
+        public Authorisation()
+        {
+            PassString = "true";
         }
     }
 }
